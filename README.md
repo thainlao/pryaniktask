@@ -1,50 +1,75 @@
-# React + TypeScript + Vite
+# Тестовое задание для Pryanik
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
+React, Vite, Typescirpt, CSS
 
-Currently, two official plugins are available:
+Приложение польностью типизированно, для стилей у вас написано использовать Material UI, но я имею с ним малый опыт поэтому воспользовался чистым CSS
+---
+## Авторизация
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+В задании не было указано возможности использования каких-либо стейт-мененджеров по типу reudx/mobx и для авторизации я использовал useContext. Он имеет свои недостатки но для SPA приложения, на мой взгляд, вполне себе актуален
+Но в своих проектах я предпочитаю использование RTK
+---
 
-## Expanding the ESLint configuration
+---
+## Также в проекте реализована адаптивная верстка, проверки на авторизацию для запросов.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+```
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
 
-- Configure the top-level `parserOptions` property like this:
+    const tokenFromStorage = localStorage.getItem('token');
+    if (!tokenFromStorage || state.isAuthenticated !== true) {
+      setError('You are not authorized to create records.');
+      toast.error('You are not authorized to create records.');
+      logout();
+      navigate('/');
+      return;
+    }
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+    try {
+      const response = await axios.post('https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/create', formData, {
+        headers: { 'x-auth': tokenFromStorage },
+      });
+
+      if (response.status === 200) {
+        onSave(response.data.data);
+        toast.success('Успешно создали запись');
+      } else {
+        setError('Failed to create record');
+      }
+    } catch (err) {
+      setError('An error occurred while creating the record');
+    } finally {
+      setLoading(false);
+    }
+  };
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+Даже если пользователь авторизовался и удалил токен через Application (иммитация того что токен сгорел), выполнить запрос он не сможет, и его отправил на loginPage
+Также временная сложность большинства алгоритмов в данном случаи O(1), из плюсов алгоритма могу выделить что изначально происходит проверка авторизации, далее уже выполнение запроса, из минусов использование localStorage, так как это может быть уязвимо для ралзичных атак.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+---
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+Так же реализовал модальное окно, которое по всем канонам открывается с анимацией, закрывается при esc, нажатием за пределы модального окна и дефолтную кнопку закрытия
 ```
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        onCancel();
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [onCancel]);
+
+  // Закрытие при клике за пределами модального окна
+  const handleOverlayClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    if ((event.target as HTMLDivElement).classList.contains('delete-confirm-overlay')) {
+      onCancel();
+    }
+  };
+```
+
