@@ -55,11 +55,50 @@
     background-color: #00b4d8;
     color: white;
     width: 100px;
-  }
+}
 
   .cancelbut {
     background-color: rgb(236, 79, 79);
     color: rgb(224, 224, 224);
     width: 70px;
+}
+
+@media (max-width: 600px) {
+  .add-record-container {
+    padding: 15px; 
+    align-items: start;
   }
+
+  .add-record-container h4 {
+    font-size: 0.9rem;
+  }
+
+  .add-record-container form input {
+    height: 35px; 
+  }
+
+  .buttons_section {
+    flex-direction: column; 
+    gap: 10px; 
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .add-record-container {
+    padding: 20px;
+    align-items: start;
+  }
+
+  .add-record-container h4 {
+    font-size: 1rem; 
+  }
+
+  .add-record-container form input {
+    height: 40px; 
+  }
+
+  .buttons_section {
+    flex-direction: row;
+  }
+}
 

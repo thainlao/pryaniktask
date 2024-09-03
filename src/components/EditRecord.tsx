@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import { DataItem, EditRecordProps } from '../types';
+import Loader from '../pages/Loader';
 
 export const EditRecord: React.FC<EditRecordProps> = ({ item, onCancel, onSave }) => {
   const { state: { token }, logout } = useAuth();
@@ -28,7 +29,7 @@ export const EditRecord: React.FC<EditRecordProps> = ({ item, onCancel, onSave }
       setError('You are not authorized to create records.');
       toast.error('You are not authorized to create records.');
       logout();
-      navigate('/');
+      navigate('/pryaniktask');
       return;
     }
 
@@ -154,7 +155,7 @@ export const EditRecord: React.FC<EditRecordProps> = ({ item, onCancel, onSave }
 
         <div className="buttons_section">
         <button type="submit" disabled={loading} className='savebut'>
-          {loading ? 'Saving...' : 'Save'}
+          {loading ? <Loader /> : 'Save'}
         </button>
 
         <button type="button" onClick={onCancel} className='cancelbut'>

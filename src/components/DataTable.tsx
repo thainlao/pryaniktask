@@ -9,6 +9,7 @@ import { DeleteConfirm } from './DeleteConfirm';
 import { toast } from 'react-toastify';
 import { DataItem } from '../types';
 import Links from '../pages/Links';
+import Loader from '../pages/Loader';
 
 export const DataTable: React.FC = () => {
   const [data, setData] = useState<DataItem[]>([]);
@@ -23,7 +24,7 @@ export const DataTable: React.FC = () => {
 
   useEffect(() => {
     if (!state.isAuthenticated) {
-      navigate('/');
+      navigate('/pryaniktask');
     }
   }, [state.isAuthenticated, navigate]);
 
@@ -50,7 +51,7 @@ export const DataTable: React.FC = () => {
       setError('You are not authorized to create records.');
       toast.error('You are not authorized to create records.');
       logout();
-      navigate('/');
+      navigate('/pryaniktask');
       return;
     }
 
@@ -94,7 +95,7 @@ export const DataTable: React.FC = () => {
 
   const handleLogout = () => {
     logout(); 
-    navigate('/');
+    navigate('/pryaniktask');
   };
 
   return (
@@ -108,7 +109,7 @@ export const DataTable: React.FC = () => {
       ) : (
         <>
           {loading ? (
-            <p>Loading...</p>
+            <Loader />
           ) : error ? (
             <p className="error">{error}</p>
           ) : data.length === 0 ? (

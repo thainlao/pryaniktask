@@ -5,6 +5,7 @@
   justify-content: space-between;
   min-height: 100vh;
   height: auto;
+  overflow-x: hidden;
 }
 
 .table-container {
@@ -173,12 +174,13 @@
   .data-table button {
     padding: 4px 6px;
     font-size: 12px;
+    margin-left: 5px;
   }
 
   .data-table th,
   .data-table td {
     display: block;
-    text-align: right;
+    text-align: left;
   }
 
   .data-table tr {
@@ -201,10 +203,5 @@
     float: left;
     font-weight: bold;
     text-transform: capitalize;
-  }
-
-  .data-table th:last-child,
-  .data-table td:last-child {
-    text-align: center;
   }
 }

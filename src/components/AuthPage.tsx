@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/auth.css';
 import Links from '../pages/Links';
+import Loader from '../pages/Loader';
 
 export const AuthPage: React.FC = () => {
   const [username, setUsername] = useState<string>('user13');
@@ -15,7 +16,7 @@ export const AuthPage: React.FC = () => {
 
   useEffect(() => {
     if (state.isAuthenticated) {
-      navigate('/data-table');
+      navigate('/pryaniktask/data-table');
     }
   }, [state.isAuthenticated, navigate]);
 
@@ -30,7 +31,7 @@ export const AuthPage: React.FC = () => {
       });
       console.log(response.data)
       login(response.data.data.token);
-      navigate('/data-table');
+      navigate('/pryaniktask/data-table');
     } catch (err) {
       setError('Invalid username or password');
     } finally {
@@ -58,7 +59,7 @@ export const AuthPage: React.FC = () => {
         />
           {error && <p className="error">{error}</p>}
           <button className='login' type="submit" disabled={loading}>
-            {loading ? 'Loading...' : 'Login'}
+            {loading ? <Loader /> : 'Login'}
           </button>
 
           <Links />

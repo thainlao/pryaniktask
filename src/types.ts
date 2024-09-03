@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface DataItem {
     id: number;
     companySigDate: string;
@@ -25,4 +27,13 @@ export interface DeleteConfirmProps {
     id: number;
     onConfirm: () => void;
     onCancel: () => void;
+}
+
+export interface AuthState {
+    isAuthenticated: boolean;
+    token: string | null;
+}
+  
+export interface AuthProviderProps {
+    children: ReactNode;
 }

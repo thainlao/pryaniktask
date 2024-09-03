@@ -11,8 +11,8 @@ function App() {
     <AuthProvider>
       <Router>
         <Routes>
-          <Route path="/" element={<AuthPage />} />
-          <Route path="/data-table" element={<DataTable />} />
+          <Route path="/pryaniktask" element={<AuthPage />} />
+          <Route path="/pryaniktask/data-table" element={<DataTable />} />
         </Routes>
       </Router>
       <ToastContainer />

@@ -7,7 +7,7 @@ const Links = () => {
             <a href='https://t.me/thainlaod'>
             <img src={tg} alt='telegram' />
             </a>
-            <a href='/'>
+            <a href='https://github.com/thainlao/pryaniktask'>
             <img src={github} alt='github' />
             </a>
     
