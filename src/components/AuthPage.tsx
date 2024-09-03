@@ -59,7 +59,7 @@ export const AuthPage: React.FC = () => {
         />
           {error && <p className="error">{error}</p>}
           <button className='login' type="submit" disabled={loading}>
-            {loading ? <Loader /> : 'Login'}
+            Login
           </button>
 
           <Links />
@@ -67,6 +67,7 @@ export const AuthPage: React.FC = () => {
       <aside>
         <img src='https://pryaniky.com/wp-content/themes/roystat_v6.15/img/svg/logo-face.svg' loading='lazy'/>
       </aside>
+      {loading ? <Loader /> : ''}
     </div>
   );
 };
